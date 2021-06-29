@@ -777,6 +777,13 @@ private:
     void standby_update();
 
     // Log.cpp
+
+    //%%%%%%%%%%%%%%%%%%
+    //%%%%%%%%%%%%%%%%%%
+    void Log_Write_Test();
+    //%%%%%%%%%%%%%%%%%%
+    //%%%%%%%%%%%%%%%%%%
+
     void Log_Write_Control_Tuning();
     void Log_Write_Attitude();
     void Log_Write_EKF_POS();

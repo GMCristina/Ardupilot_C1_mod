@@ -2,6 +2,29 @@
 
 #if LOGGING_ENABLED == ENABLED
 
+
+//%%%%%%%%%%%%%%%%%%%%%%%
+//%%%%%%%%%%%%%%%%%%%%%%
+struct PACKED log_Test {
+    LOG_PACKET_HEADER;
+    uint64_t time_us;
+    char test [16];
+    uint8_t num;
+};
+
+void Copter::Log_Write_Test()
+{
+    struct log_Test pkt = {
+        LOG_PACKET_HEADER_INIT(LOG_TEST_MSG),
+        time_us  : AP_HAL::micros64(),
+        test  : {'H', 'e', 'l', 'l', 'o', '\0'},
+        num : 42
+    };
+    logger.WriteBlock(&pkt, sizeof(pkt));
+}
+//%%%%%%%%%%%%%%%%%%%%%
+//%%%%%%%%%%%%%%%%%%%%%%%%
+
 // Code to Write and Read packets from AP_Logger log memory
 // Code to interact with the user to dump or erase logs
 
@@ -542,6 +565,12 @@ const struct LogStructure Copter::log_structure[] = {
 
     { LOG_GUIDEDTARGET_MSG, sizeof(log_GuidedTarget),
       "GUID",  "QBffffff",    "TimeUS,Type,pX,pY,pZ,vX,vY,vZ", "s-mmmnnn", "F-BBBBBB" },
+//%%%%%%%%%%%%%%%%%%%%%%%%
+//%%%%%%%%%%%%%%%%%%%%%%%%
+      { LOG_TEST_MSG, sizeof(log_Test),
+        "TEST",  "QNB",    "TimeUS,Test,num", "s--", "F--" },
+//%%%%%%%%%%%%%%%%%%%%%%%%
+//%%%%%%%%%%%%%%%%%%%%%%%%
 };
 
 void Copter::Log_Write_Vehicle_Startup_Messages()
