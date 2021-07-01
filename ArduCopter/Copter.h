@@ -650,6 +650,14 @@ private:
     void rc_loop();
     void throttle_loop();
     void update_batt_compass(void);
+    // %%%%%%%%%%%%%%%%%%%
+        //%%%%%%%%%%%%%%%%%
+    void diciass_hz_logging_loop();
+    void sessancinq_logging_loop();
+    void cenquind_hz_logging_loop();
+    void trecensett_hz_logging_loop();
+        //%%%%%%%%%%%%%%%%%
+        //%%%%%%%%%%%%%%%%%%%
     void fourhundred_hz_logging();
     void ten_hz_logging_loop();
     void twentyfive_hz_logging();
@@ -780,7 +788,13 @@ private:
 
     //%%%%%%%%%%%%%%%%%%
     //%%%%%%%%%%%%%%%%%%
-    void Log_Write_Test();
+    void Log_Write_Test1();
+    void Log_Write_Test2();
+    void Log_Write_Test3();
+    void Log_Write_Test4();
+    void Log_Write_Test5();
+    void Log_Write_Test6();
+    void Log_Write_Test7();
     //%%%%%%%%%%%%%%%%%%
     //%%%%%%%%%%%%%%%%%%
 

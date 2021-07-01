@@ -12,10 +12,82 @@ struct PACKED log_Test {
     uint8_t num;
 };
 
-void Copter::Log_Write_Test()
+void Copter::Log_Write_Test1()
 {
     struct log_Test pkt = {
-        LOG_PACKET_HEADER_INIT(LOG_TEST_MSG),
+        LOG_PACKET_HEADER_INIT(LOG_TEST1_MSG),
+        time_us  : AP_HAL::micros64(),
+        test  : {'H', 'e', 'l', 'l', 'o', '\0'},
+        num : 42
+    };
+    logger.WriteBlock(&pkt, sizeof(pkt));
+}
+
+
+void Copter::Log_Write_Test2()
+{
+    struct log_Test pkt = {
+        LOG_PACKET_HEADER_INIT(LOG_TEST2_MSG),
+        time_us  : AP_HAL::micros64(),
+        test  : {'H', 'e', 'l', 'l', 'o', '\0'},
+        num : 42
+    };
+    logger.WriteBlock(&pkt, sizeof(pkt));
+}
+
+
+void Copter::Log_Write_Test3()
+{
+    struct log_Test pkt = {
+        LOG_PACKET_HEADER_INIT(LOG_TEST3_MSG),
+        time_us  : AP_HAL::micros64(),
+        test  : {'H', 'e', 'l', 'l', 'o', '\0'},
+        num : 42
+    };
+    logger.WriteBlock(&pkt, sizeof(pkt));
+}
+
+
+void Copter::Log_Write_Test4()
+{
+    struct log_Test pkt = {
+        LOG_PACKET_HEADER_INIT(LOG_TEST4_MSG),
+        time_us  : AP_HAL::micros64(),
+        test  : {'H', 'e', 'l', 'l', 'o', '\0'},
+        num : 42
+    };
+    logger.WriteBlock(&pkt, sizeof(pkt));
+}
+
+
+void Copter::Log_Write_Test5()
+{
+    struct log_Test pkt = {
+        LOG_PACKET_HEADER_INIT(LOG_TEST5_MSG),
+        time_us  : AP_HAL::micros64(),
+        test  : {'H', 'e', 'l', 'l', 'o', '\0'},
+        num : 42
+    };
+    logger.WriteBlock(&pkt, sizeof(pkt));
+}
+
+
+void Copter::Log_Write_Test6()
+{
+    struct log_Test pkt = {
+        LOG_PACKET_HEADER_INIT(LOG_TEST6_MSG),
+        time_us  : AP_HAL::micros64(),
+        test  : {'H', 'e', 'l', 'l', 'o', '\0'},
+        num : 42
+    };
+    logger.WriteBlock(&pkt, sizeof(pkt));
+}
+
+
+void Copter::Log_Write_Test7()
+{
+    struct log_Test pkt = {
+        LOG_PACKET_HEADER_INIT(LOG_TEST7_MSG),
         time_us  : AP_HAL::micros64(),
         test  : {'H', 'e', 'l', 'l', 'o', '\0'},
         num : 42
@@ -567,8 +639,20 @@ const struct LogStructure Copter::log_structure[] = {
       "GUID",  "QBffffff",    "TimeUS,Type,pX,pY,pZ,vX,vY,vZ", "s-mmmnnn", "F-BBBBBB" },
 //%%%%%%%%%%%%%%%%%%%%%%%%
 //%%%%%%%%%%%%%%%%%%%%%%%%
-      { LOG_TEST_MSG, sizeof(log_Test),
-        "TEST",  "QNB",    "TimeUS,Test,num", "s--", "F--" },
+      { LOG_TEST1_MSG, sizeof(log_Test),
+        "TES1",  "QNB",    "TimeUS,Test,num", "s--", "F--" },
+		 { LOG_TEST2_MSG, sizeof(log_Test),
+		        "TES2",  "QNB",    "TimeUS,Test,num", "s--", "F--" },
+				 { LOG_TEST3_MSG, sizeof(log_Test),
+				        "TES3",  "QNB",    "TimeUS,Test,num", "s--", "F--" },
+						 { LOG_TEST4_MSG, sizeof(log_Test),
+						        "TES4",  "QNB",    "TimeUS,Test,num", "s--", "F--" },
+								 { LOG_TEST5_MSG, sizeof(log_Test),
+								        "TES5",  "QNB",    "TimeUS,Test,num", "s--", "F--" },
+										 { LOG_TEST6_MSG, sizeof(log_Test),
+										        "TES6",  "QNB",    "TimeUS,Test,num", "s--", "F--" },
+												 { LOG_TEST7_MSG, sizeof(log_Test),
+												        "TES7",  "QNB",    "TimeUS,Test,num", "s--", "F--" },
 //%%%%%%%%%%%%%%%%%%%%%%%%
 //%%%%%%%%%%%%%%%%%%%%%%%%
 };

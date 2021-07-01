@@ -156,7 +156,16 @@ const AP_Scheduler::Task Copter::scheduler_tasks[] = {
     SCHED_TASK_CLASS(AP_Camera,            &copter.camera,              update,          50,  75),
 #endif
 #if LOGGING_ENABLED == ENABLED
-    SCHED_TASK(ten_hz_logging_loop,   10,    350),
+	//%%%%%%%%%%%%%%%%
+		//%%%%%%%%%%%%%%%%
+		SCHED_TASK(diciass_hz_logging_loop,   17,    200),
+		SCHED_TASK(sessancinq_logging_loop,   65,    175),
+		SCHED_TASK(cenquind_hz_logging_loop,   115,    150),
+		SCHED_TASK(trecensett_hz_logging_loop,   370,   50),
+		//%%%%%%%%%%%%%%%%
+		//%%%%%%%%%%%%%%%%
+		/// NBNBNBNBN
+    SCHED_TASK(ten_hz_logging_loop,   400,    350), //10, 350
     SCHED_TASK(twentyfive_hz_logging, 25,    110),
     SCHED_TASK_CLASS(AP_Logger,      &copter.logger,           periodic_tasks, 400, 300),
 #endif
@@ -386,10 +395,38 @@ void Copter::update_batt_compass(void)
     }
 }
 
+//%%%%%%%%%%%%%%%%%%%
+//%%%%%%%%%%%%%%%%%
+void Copter::diciass_hz_logging_loop()
+{
+	Log_Write_Test1();
+}
+void Copter::sessancinq_logging_loop()
+{
+	Log_Write_Test2();
+}
+ void Copter::cenquind_hz_logging_loop()
+ {
+ 	Log_Write_Test3();
+ }
+ void Copter::trecensett_hz_logging_loop()
+ {
+ 	Log_Write_Test4();
+ }
+
+ //%%%%%%%%%%%%%%%%%%%
+ //%%%%%%%%%%%%%%%%%
+
+
 // Full rate logging of attitude, rate and pid loops
 // should be run at 400hz
 void Copter::fourhundred_hz_logging()
 {
+	    //%%%%%%%%%%%%%%%%%%%
+	    //%%%%%%%%%%%%%%%%%
+	    Log_Write_Test5();
+	    //%%%%%%%%%%%%%%%%%
+	    //%%%%%%%%%%%%%%%%%%%
     if (should_log(MASK_LOG_ATTITUDE_FAST) && !copter.flightmode->logs_attitude()) {
         Log_Write_Attitude();
     }
@@ -400,7 +437,7 @@ void Copter::fourhundred_hz_logging()
 void Copter::ten_hz_logging_loop()
 {   // %%%%%%%%%%%%%%%%%%%
     //%%%%%%%%%%%%%%%%%
-    Log_Write_Test();
+    Log_Write_Test6();
     //%%%%%%%%%%%%%%%%%
     //%%%%%%%%%%%%%%%%%%%
 
@@ -452,6 +489,11 @@ void Copter::ten_hz_logging_loop()
 // twentyfive_hz_logging - should be run at 25hz
 void Copter::twentyfive_hz_logging()
 {
+	// %%%%%%%%%%%%%%%%%%%
+	    //%%%%%%%%%%%%%%%%%
+	    Log_Write_Test7();
+	    //%%%%%%%%%%%%%%%%%
+	    //%%%%%%%%%%%%%%%%%%%
     if (should_log(MASK_LOG_ATTITUDE_FAST)) {
         Log_Write_EKF_POS();
     }
