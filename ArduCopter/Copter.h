@@ -652,10 +652,10 @@ private:
     void update_batt_compass(void);
     // %%%%%%%%%%%%%%%%%%%
         //%%%%%%%%%%%%%%%%%
-    void diciass_hz_logging_loop();
-    void sessancinq_logging_loop();
-    void cenquind_hz_logging_loop();
-    void trecensett_hz_logging_loop();
+    void seventeen_hz_logging_loop();
+    void sixtyfive_logging_loop();
+    void onehundredfifty_hz_logging_loop();
+    void threehundredseventy_hz_logging_loop();
         //%%%%%%%%%%%%%%%%%
         //%%%%%%%%%%%%%%%%%%%
     void fourhundred_hz_logging();
@@ -795,6 +795,7 @@ private:
     void Log_Write_Test5();
     void Log_Write_Test6();
     void Log_Write_Test7();
+    void Log_Write_Vertical_Speed();
     //%%%%%%%%%%%%%%%%%%
     //%%%%%%%%%%%%%%%%%%
 

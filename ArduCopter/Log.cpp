@@ -12,6 +12,13 @@ struct PACKED log_Test {
     uint8_t num;
 };
 
+struct PACKED log_Vz {
+    LOG_PACKET_HEADER;
+    uint64_t time_us;
+    float vz;
+};
+
+
 void Copter::Log_Write_Test1()
 {
     struct log_Test pkt = {
@@ -93,6 +100,24 @@ void Copter::Log_Write_Test7()
         num : 42
     };
     logger.WriteBlock(&pkt, sizeof(pkt));
+}
+
+void Copter::Log_Write_Vertical_Speed(){
+
+     uint8_t instance =0;
+     //AP_GPS *oggetto = AP_GPS::get_singleton();
+    // Vector3f vec = oggetto.velocity(instance);
+    // AP_GPS oggetto = AP_GPS::AP_GPS();
+
+    //AP_GPS ogg = copter.gps;
+   struct log_Vz pkt = {
+            LOG_PACKET_HEADER_INIT(LOG_Vz_MSG),
+            time_us  : AP_HAL::micros64(),
+            vz  : AP::gps().velocity(instance).z
+        };
+        logger.WriteBlock(&pkt, sizeof(pkt));
+
+
 }
 //%%%%%%%%%%%%%%%%%%%%%
 //%%%%%%%%%%%%%%%%%%%%%%%%
@@ -493,7 +518,7 @@ void Copter::Log_Write_GuidedTarget(ModeGuided::SubMode target_type, const Vecto
     logger.WriteBlock(&pkt, sizeof(pkt));
 }
 
-// type and unit information can be found in
+// type and unit information can be found in  "GPS"
 // libraries/AP_Logger/Logstructure.h; search for "log_Units" for
 // units and "Format characters" for field type information
 const struct LogStructure Copter::log_structure[] = {
@@ -639,6 +664,8 @@ const struct LogStructure Copter::log_structure[] = {
       "GUID",  "QBffffff",    "TimeUS,Type,pX,pY,pZ,vX,vY,vZ", "s-mmmnnn", "F-BBBBBB" },
 //%%%%%%%%%%%%%%%%%%%%%%%%
 //%%%%%%%%%%%%%%%%%%%%%%%%
+      { LOG_Vz_MSG, sizeof(log_Vz),
+        "Vz",  "Qf",    "TimeUS,Vz", "sn", "F0" },
       { LOG_TEST1_MSG, sizeof(log_Test),
         "TES1",  "QNB",    "TimeUS,Test,num", "s--", "F--" },
 		 { LOG_TEST2_MSG, sizeof(log_Test),
