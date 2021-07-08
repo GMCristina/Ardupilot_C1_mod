@@ -788,14 +788,8 @@ private:
 
     //%%%%%%%%%%%%%%%%%%
     //%%%%%%%%%%%%%%%%%%
-    void Log_Write_Test1();
-    void Log_Write_Test2();
-    void Log_Write_Test3();
-    void Log_Write_Test4();
-    void Log_Write_Test5();
-    void Log_Write_Test6();
-    void Log_Write_Test7();
     void Log_Write_Vertical_Speed();
+    void Log_Write_RPY_Rate();
     //%%%%%%%%%%%%%%%%%%
     //%%%%%%%%%%%%%%%%%%
 

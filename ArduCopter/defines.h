@@ -124,13 +124,7 @@ enum LoggingParameters {
      //%%%%%%%%%%%%%%%%%
      //%%%%%%%%%%%%%%%%%
      LOG_Vz_MSG,
-     LOG_TEST1_MSG,
-	 LOG_TEST2_MSG,
-	 LOG_TEST3_MSG,
-	 LOG_TEST4_MSG,
-	 LOG_TEST5_MSG,
-	 LOG_TEST6_MSG,
-	 LOG_TEST7_MSG,
+     LOG_RPY_RATE_MSG,
      //%%%%%%%%%%%%%%%%%%%
      //%%%%%%%%%%%%%%%%%%%
 };

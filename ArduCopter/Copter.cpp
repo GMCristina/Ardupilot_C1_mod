@@ -399,21 +399,20 @@ void Copter::update_batt_compass(void)
 //%%%%%%%%%%%%%%%%%
 void Copter::seventeen_hz_logging_loop()
 {
-    GCS_SEND_TEXT(MAV_SEVERITY_WARNING,"prova");
+    // GCS_SEND_TEXT(MAV_SEVERITY_WARNING,"prova");
     Log_Write_Vertical_Speed();
-	//Log_Write_Test1();
 }
 void Copter::sixtyfive_logging_loop()
 {
-	//Log_Write_Test2();
+
 }
  void Copter::onehundredfifty_hz_logging_loop()
  {
- 	//Log_Write_Test3();
+
  }
  void Copter::threehundredseventy_hz_logging_loop()
  {
- 	//Log_Write_Test4();
+     Log_Write_RPY_Rate();
  }
 
  //%%%%%%%%%%%%%%%%%%%
@@ -424,11 +423,6 @@ void Copter::sixtyfive_logging_loop()
 // should be run at 400hz
 void Copter::fourhundred_hz_logging()
 {
-	    //%%%%%%%%%%%%%%%%%%%
-	    //%%%%%%%%%%%%%%%%%
-	  //  Log_Write_Test5();
-	    //%%%%%%%%%%%%%%%%%
-	    //%%%%%%%%%%%%%%%%%%%
     if (should_log(MASK_LOG_ATTITUDE_FAST) && !copter.flightmode->logs_attitude()) {
         Log_Write_Attitude();
     }
@@ -437,12 +431,7 @@ void Copter::fourhundred_hz_logging()
 // ten_hz_logging_loop
 // should be run at 10hz
 void Copter::ten_hz_logging_loop()
-{   // %%%%%%%%%%%%%%%%%%%
-    //%%%%%%%%%%%%%%%%%
-    //Log_Write_Test6();
-    //%%%%%%%%%%%%%%%%%
-    //%%%%%%%%%%%%%%%%%%%
-
+{
     // log attitude data if we're not already logging at the higher rate
     if (should_log(MASK_LOG_ATTITUDE_MED) && !should_log(MASK_LOG_ATTITUDE_FAST) && !copter.flightmode->logs_attitude()) {
         Log_Write_Attitude();
@@ -491,11 +480,6 @@ void Copter::ten_hz_logging_loop()
 // twentyfive_hz_logging - should be run at 25hz
 void Copter::twentyfive_hz_logging()
 {
-	// %%%%%%%%%%%%%%%%%%%
-	    //%%%%%%%%%%%%%%%%%
-	   // Log_Write_Test7();
-	    //%%%%%%%%%%%%%%%%%
-	    //%%%%%%%%%%%%%%%%%%%
     if (should_log(MASK_LOG_ATTITUDE_FAST)) {
         Log_Write_EKF_POS();
     }

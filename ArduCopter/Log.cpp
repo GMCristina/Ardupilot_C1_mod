@@ -5,12 +5,6 @@
 
 //%%%%%%%%%%%%%%%%%%%%%%%
 //%%%%%%%%%%%%%%%%%%%%%%
-struct PACKED log_Test {
-    LOG_PACKET_HEADER;
-    uint64_t time_us;
-    char test [16];
-    uint8_t num;
-};
 
 struct PACKED log_Vz {
     LOG_PACKET_HEADER;
@@ -18,89 +12,12 @@ struct PACKED log_Vz {
     float vz;
 };
 
+struct PACKED log_RPY_rate {
+    LOG_PACKET_HEADER;
+    uint64_t time_us;
+    float gyr_x, gyr_y, gyr_z;
+};
 
-void Copter::Log_Write_Test1()
-{
-    struct log_Test pkt = {
-        LOG_PACKET_HEADER_INIT(LOG_TEST1_MSG),
-        time_us  : AP_HAL::micros64(),
-        test  : {'H', 'e', 'l', 'l', 'o', '\0'},
-        num : 42
-    };
-    logger.WriteBlock(&pkt, sizeof(pkt));
-}
-
-
-void Copter::Log_Write_Test2()
-{
-    struct log_Test pkt = {
-        LOG_PACKET_HEADER_INIT(LOG_TEST2_MSG),
-        time_us  : AP_HAL::micros64(),
-        test  : {'H', 'e', 'l', 'l', 'o', '\0'},
-        num : 42
-    };
-    logger.WriteBlock(&pkt, sizeof(pkt));
-}
-
-
-void Copter::Log_Write_Test3()
-{
-    struct log_Test pkt = {
-        LOG_PACKET_HEADER_INIT(LOG_TEST3_MSG),
-        time_us  : AP_HAL::micros64(),
-        test  : {'H', 'e', 'l', 'l', 'o', '\0'},
-        num : 42
-    };
-    logger.WriteBlock(&pkt, sizeof(pkt));
-}
-
-
-void Copter::Log_Write_Test4()
-{
-    struct log_Test pkt = {
-        LOG_PACKET_HEADER_INIT(LOG_TEST4_MSG),
-        time_us  : AP_HAL::micros64(),
-        test  : {'H', 'e', 'l', 'l', 'o', '\0'},
-        num : 42
-    };
-    logger.WriteBlock(&pkt, sizeof(pkt));
-}
-
-
-void Copter::Log_Write_Test5()
-{
-    struct log_Test pkt = {
-        LOG_PACKET_HEADER_INIT(LOG_TEST5_MSG),
-        time_us  : AP_HAL::micros64(),
-        test  : {'H', 'e', 'l', 'l', 'o', '\0'},
-        num : 42
-    };
-    logger.WriteBlock(&pkt, sizeof(pkt));
-}
-
-
-void Copter::Log_Write_Test6()
-{
-    struct log_Test pkt = {
-        LOG_PACKET_HEADER_INIT(LOG_TEST6_MSG),
-        time_us  : AP_HAL::micros64(),
-        test  : {'H', 'e', 'l', 'l', 'o', '\0'},
-        num : 42
-    };
-    logger.WriteBlock(&pkt, sizeof(pkt));
-}
-
-
-void Copter::Log_Write_Test7()
-{
-    struct log_Test pkt = {
-        LOG_PACKET_HEADER_INIT(LOG_TEST7_MSG),
-        time_us  : AP_HAL::micros64(),
-        test  : {'H', 'e', 'l', 'l', 'o', '\0'},
-        num : 42
-    };
-    logger.WriteBlock(&pkt, sizeof(pkt));
-}
 
 void Copter::Log_Write_Vertical_Speed(){
 
@@ -119,6 +36,23 @@ void Copter::Log_Write_Vertical_Speed(){
 
 
 }
+
+void Copter::Log_Write_RPY_Rate(){
+
+    uint8_t imu_instance = 0;
+
+   struct log_RPY_rate pkt = {
+            LOG_PACKET_HEADER_INIT(LOG_RPY_RATE_MSG),
+            time_us  : AP_HAL::micros64(),
+              gyr_x : AP::ins().get_gyro(imu_instance).x,
+              gyr_y : AP::ins().get_gyro(imu_instance).y,
+              gyr_z : AP::ins().get_gyro(imu_instance).z
+        };
+        logger.WriteBlock(&pkt, sizeof(pkt));
+
+}
+
+
 //%%%%%%%%%%%%%%%%%%%%%
 //%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -666,20 +600,9 @@ const struct LogStructure Copter::log_structure[] = {
 //%%%%%%%%%%%%%%%%%%%%%%%%
       { LOG_Vz_MSG, sizeof(log_Vz),
         "Vz",  "Qf",    "TimeUS,Vz", "sn", "F0" },
-      { LOG_TEST1_MSG, sizeof(log_Test),
-        "TES1",  "QNB",    "TimeUS,Test,num", "s--", "F--" },
-		 { LOG_TEST2_MSG, sizeof(log_Test),
-		        "TES2",  "QNB",    "TimeUS,Test,num", "s--", "F--" },
-				 { LOG_TEST3_MSG, sizeof(log_Test),
-				        "TES3",  "QNB",    "TimeUS,Test,num", "s--", "F--" },
-						 { LOG_TEST4_MSG, sizeof(log_Test),
-						        "TES4",  "QNB",    "TimeUS,Test,num", "s--", "F--" },
-								 { LOG_TEST5_MSG, sizeof(log_Test),
-								        "TES5",  "QNB",    "TimeUS,Test,num", "s--", "F--" },
-										 { LOG_TEST6_MSG, sizeof(log_Test),
-										        "TES6",  "QNB",    "TimeUS,Test,num", "s--", "F--" },
-												 { LOG_TEST7_MSG, sizeof(log_Test),
-												        "TES7",  "QNB",    "TimeUS,Test,num", "s--", "F--" },
+
+      { LOG_RPY_RATE_MSG, sizeof(log_RPY_rate),
+          "RPYR",  "Qfff",    "TimeUS,GyrX,GyrY,GyrZ", "sEEE", "F000" },
 //%%%%%%%%%%%%%%%%%%%%%%%%
 //%%%%%%%%%%%%%%%%%%%%%%%%
 };
