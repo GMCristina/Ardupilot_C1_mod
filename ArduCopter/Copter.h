@@ -790,6 +790,9 @@ private:
     //%%%%%%%%%%%%%%%%%%
     void Log_Write_Vertical_Speed();
     void Log_Write_RPY_Rate();
+    void Log_Write_RP();
+    void Log_Write_PWM();
+
     //%%%%%%%%%%%%%%%%%%
     //%%%%%%%%%%%%%%%%%%
 

@@ -162,7 +162,6 @@ const AP_Scheduler::Task Copter::scheduler_tasks[] = {
 		SCHED_TASK(sixtyfive_logging_loop,   65,    50),
 		SCHED_TASK(onehundredfifty_hz_logging_loop,   115,    50),
 		SCHED_TASK(threehundredseventy_hz_logging_loop,   370,   50),
-
 		//%%%%%%%%%%%%%%%%
 		//%%%%%%%%%%%%%%%%
     SCHED_TASK(ten_hz_logging_loop,   10,    350),
@@ -404,11 +403,11 @@ void Copter::seventeen_hz_logging_loop()
 }
 void Copter::sixtyfive_logging_loop()
 {
-
+    Log_Write_PWM();
 }
  void Copter::onehundredfifty_hz_logging_loop()
  {
-
+     Log_Write_RP();
  }
  void Copter::threehundredseventy_hz_logging_loop()
  {

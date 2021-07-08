@@ -18,6 +18,18 @@ struct PACKED log_RPY_rate {
     float gyr_x, gyr_y, gyr_z;
 };
 
+struct PACKED log_RP {
+    LOG_PACKET_HEADER;
+    uint64_t time_us;
+    int16_t roll, pitch;
+};
+
+struct PACKED log_PWM {
+    LOG_PACKET_HEADER;
+    uint64_t time_us;
+    uint16_t C1,C2,C3,C4;
+};
+
 
 void Copter::Log_Write_Vertical_Speed(){
 
@@ -51,6 +63,33 @@ void Copter::Log_Write_RPY_Rate(){
         logger.WriteBlock(&pkt, sizeof(pkt));
 
 }
+
+void Copter::Log_Write_RP(){
+
+   struct log_RP pkt = {
+            LOG_PACKET_HEADER_INIT(LOG_RP_MSG),
+            time_us  : AP_HAL::micros64(),
+            roll : (int16_t)AP::ahrs().roll_sensor ,
+            pitch : (int16_t)AP::ahrs().pitch_sensor
+        };
+        logger.WriteBlock(&pkt, sizeof(pkt));
+}
+
+void Copter::Log_Write_PWM(){
+
+   struct log_PWM pkt = {
+            LOG_PACKET_HEADER_INIT(LOG_PWM_MSG),
+            time_us  : AP_HAL::micros64(),
+            C1 : hal.rcout->read(0),
+            C2 : hal.rcout->read(1),
+            C3 : hal.rcout->read(2),
+            C4 : hal.rcout->read(3),
+        };
+        logger.WriteBlock(&pkt, sizeof(pkt));
+}
+
+
+
 
 
 //%%%%%%%%%%%%%%%%%%%%%
@@ -603,6 +642,15 @@ const struct LogStructure Copter::log_structure[] = {
 
       { LOG_RPY_RATE_MSG, sizeof(log_RPY_rate),
           "RPYR",  "Qfff",    "TimeUS,GyrX,GyrY,GyrZ", "sEEE", "F000" },
+
+      { LOG_RP_MSG, sizeof(log_RP),
+              "RP",  "Qcc",    "TimeUS,Roll,Pitch", "sdd", "FBB" },
+
+      { LOG_PWM_MSG, sizeof(log_PWM),
+                      "PWM",  "QHHHH",    "TimeUS,C1,C2,C3,C4", "sYYYY", "F----" },
+
+
+
 //%%%%%%%%%%%%%%%%%%%%%%%%
 //%%%%%%%%%%%%%%%%%%%%%%%%
 };
