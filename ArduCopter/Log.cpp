@@ -98,7 +98,7 @@ void Copter::Log_Write_PWM(){
 void Copter::Log_Write_Loop(){
 
    struct log_Loop pkt = {
-            LOG_PACKET_HEADER_INIT(LOG_PWM_MSG),
+            LOG_PACKET_HEADER_INIT(LOG_LOOP_MSG),
             time_us  : AP_HAL::micros64(),
             num_loops: AP::scheduler().perf_info.get_num_loops(),
             num_long_run: AP::scheduler().perf_info.get_num_long_running(),
