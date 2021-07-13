@@ -377,11 +377,30 @@ public:
 
         k_param_vehicle = 257, // vehicle common block of parameters
 
+        // %%%%%%%%%%%%%%%%
+        //%%%%%%%%%%%%%%%
+        k_param_freq_Vz,
+        k_param_freq_RPYR,
+        k_param_freq_RP,
+        k_param_freq_PWM,
+        //%%%%%%%%%%%%%%%%
+        //%%%%%%%%%%%%%%%%%
+
         // the k_param_* space is 9-bits in size
         // 511: reserved
     };
 
     AP_Int16        format_version;
+
+    //%%%%%%%%%%%%%%%%%%%%
+    //%%%%%%%%%%%%%%%%%%%%
+    AP_Float freq_Vz;
+    AP_Float freq_RPYR;
+    AP_Float freq_RP;
+    AP_Float freq_PWM;
+
+    //%%%%%%%%%%%%%%%%%%%%%%
+    //%%%%%%%%%%%%%%%%%%%%%%%
 
     // Telemetry control
     //

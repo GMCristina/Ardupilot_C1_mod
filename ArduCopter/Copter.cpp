@@ -158,10 +158,11 @@ const AP_Scheduler::Task Copter::scheduler_tasks[] = {
 #if LOGGING_ENABLED == ENABLED
 	//%%%%%%%%%%%%%%%%
 		//%%%%%%%%%%%%%%%%
-		SCHED_TASK(seventeen_hz_logging_loop,   17,    50),
-		SCHED_TASK(sixtyfive_logging_loop,   65,    50),
-		SCHED_TASK(onehundredfifty_hz_logging_loop,   115,    50),
-		SCHED_TASK(threehundredseventy_hz_logging_loop,   370,   50),
+		 SCHED_TASK(vertical_speed_logging_loop,   (float)copter.g.freq_Vz,    50),
+		 SCHED_TASK(pwm_logging_loop,   65,    50),
+		 SCHED_TASK(rp_logging_loop,   115,    50),
+		 SCHED_TASK(rpyr_logging_loop, 370,   50),
+		// SCHED_TASK(perf_logging_loop,0.1,75),
 		//%%%%%%%%%%%%%%%%
 		//%%%%%%%%%%%%%%%%
     SCHED_TASK(ten_hz_logging_loop,   10,    350),
@@ -396,22 +397,31 @@ void Copter::update_batt_compass(void)
 
 //%%%%%%%%%%%%%%%%%%%
 //%%%%%%%%%%%%%%%%%
-void Copter::seventeen_hz_logging_loop()
+void Copter::vertical_speed_logging_loop()
 {
-    // GCS_SEND_TEXT(MAV_SEVERITY_WARNING,"prova");
+    GCS_SEND_TEXT(MAV_SEVERITY_WARNING,"La freq e' %d", (int)g.freq_Vz);
     Log_Write_Vertical_Speed();
 }
-void Copter::sixtyfive_logging_loop()
+void Copter::pwm_logging_loop()
 {
+    // GCS_SEND_TEXT(MAV_SEVERITY_WARNING,"La freq e' %d", (int)g.freq_PWM);
     Log_Write_PWM();
 }
- void Copter::onehundredfifty_hz_logging_loop()
+ void Copter::rp_logging_loop()
  {
+     // GCS_SEND_TEXT(MAV_SEVERITY_WARNING,"La freq e' %d", (int)g.freq_RP);
      Log_Write_RP();
  }
- void Copter::threehundredseventy_hz_logging_loop()
+ void Copter::rpyr_logging_loop()
  {
+     // GCS_SEND_TEXT(MAV_SEVERITY_WARNING,"La freq e' %d", (int)g.freq_RPYR);
      Log_Write_RPY_Rate();
+ }
+
+ void Copter::perf_logging_loop()
+ {
+     Log_Write_Loop();
+     AP::scheduler().perf_info.reset();
  }
 
  //%%%%%%%%%%%%%%%%%%%

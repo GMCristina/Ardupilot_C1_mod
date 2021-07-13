@@ -65,6 +65,25 @@
    #   define RC_FAST_SPEED 490
 #endif
 
+//%%%%%%%%%%%%%%%%%%%%%%%%
+// FREQ
+#ifndef FREQ_VZ_DEFAULT
+   #   define FREQ_VZ_DEFAULT 17
+#endif
+
+#ifndef FREQ_RPYR_DEFAULT
+   #   define FREQ_RPYR_DEFAULT 370
+#endif
+
+#ifndef FREQ_RP_DEFAULT
+   #   define FREQ_RP_DEFAULT 115
+#endif
+
+#ifndef FREQ_PWM_DEFAULT
+   #   define FREQ_PWM_DEFAULT 65
+#endif
+//%%%%%%%%%%%%%%%%%%%%
+
 //////////////////////////////////////////////////////////////////////////////
 // Rangefinder
 //

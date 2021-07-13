@@ -36,6 +36,37 @@
 #endif
 
 const AP_Param::Info Copter::var_info[] = {
+
+
+        // @Param: FREQ_VZ
+        // @DisplayName: Frequenza Vertical Speed
+        // @Description: Imposta la frequenza del log di Vz
+        // @Range: 0 500
+        // @Units: Hz
+        // @User: Standard
+        GSCALAR(freq_Vz, "FREQ_VZ",   FREQ_VZ_DEFAULT),
+
+        // @Param: FREQ_RPYR
+        // @DisplayName: Frequenza RPY Rate
+        // @Description: Imposta la frequenza del log di RPYR
+        // @User: Standard
+        GSCALAR(freq_RPYR, "FREQ_RPYR",   FREQ_RPYR_DEFAULT),
+
+        // @Param: FREQ_RP
+        // @DisplayName: Frequenza Roll e Pitch
+        // @Description: Imposta la frequenza del log di RP
+        // @Range: 0 500
+        // @User: Standard
+        GSCALAR(freq_RP, "FREQ_RP",   FREQ_RP_DEFAULT),
+
+        // @Param: FREQ_PWM
+        // @DisplayName: Frequenza PWM
+        // @Description: Imposta la frequenza del log di PWM
+        // @Range: 0 500
+        // @User: Standard
+        GSCALAR(freq_PWM, "FREQ_PWM",   FREQ_PWM_DEFAULT),
+
+
     // @Param: FORMAT_VERSION
     // @DisplayName: Eeprom format version number
     // @Description: This value is incremented when changes are made to the eeprom format

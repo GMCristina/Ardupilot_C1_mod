@@ -127,6 +127,7 @@ enum LoggingParameters {
      LOG_RPY_RATE_MSG,
      LOG_RP_MSG,
      LOG_PWM_MSG,
+     LOG_LOOP_MSG,
      //%%%%%%%%%%%%%%%%%%%
      //%%%%%%%%%%%%%%%%%%%
 };

@@ -100,6 +100,7 @@ public:
     // write out PERF message to logger
     void Log_Write_Performance();
 
+
     // call when one tick has passed
     void tick(void);
 

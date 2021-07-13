@@ -30,6 +30,13 @@ struct PACKED log_PWM {
     uint16_t C1,C2,C3,C4;
 };
 
+struct PACKED log_Loop {
+    LOG_PACKET_HEADER;
+    uint64_t time_us;
+    uint16_t num_loops, num_long_run;
+    uint32_t  max_time, min_time, avg_time;
+};
+
 
 void Copter::Log_Write_Vertical_Speed(){
 
@@ -88,9 +95,19 @@ void Copter::Log_Write_PWM(){
         logger.WriteBlock(&pkt, sizeof(pkt));
 }
 
+void Copter::Log_Write_Loop(){
 
-
-
+   struct log_Loop pkt = {
+            LOG_PACKET_HEADER_INIT(LOG_PWM_MSG),
+            time_us  : AP_HAL::micros64(),
+            num_loops: AP::scheduler().perf_info.get_num_loops(),
+            num_long_run: AP::scheduler().perf_info.get_num_long_running(),
+            max_time : AP::scheduler().perf_info.get_max_time(),
+            min_time : AP::scheduler().perf_info.get_min_time(),
+            avg_time :AP::scheduler().perf_info.get_avg_time(),
+        };
+        logger.WriteBlock(&pkt, sizeof(pkt));
+}
 
 //%%%%%%%%%%%%%%%%%%%%%
 //%%%%%%%%%%%%%%%%%%%%%%%%
@@ -649,7 +666,8 @@ const struct LogStructure Copter::log_structure[] = {
       { LOG_PWM_MSG, sizeof(log_PWM),
                       "PWM",  "QHHHH",    "TimeUS,C1,C2,C3,C4", "sYYYY", "F----" },
 
-
+      { LOG_LOOP_MSG, sizeof(log_Loop),
+                    "LOOP",  "QHHIII",    "TimeUS, num_loops, num_long_run, max_time, min_time, avg_time", "s-----", "F-----" },
 
 //%%%%%%%%%%%%%%%%%%%%%%%%
 //%%%%%%%%%%%%%%%%%%%%%%%%

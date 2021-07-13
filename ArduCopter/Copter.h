@@ -652,10 +652,11 @@ private:
     void update_batt_compass(void);
     // %%%%%%%%%%%%%%%%%%%
         //%%%%%%%%%%%%%%%%%
-    void seventeen_hz_logging_loop();
-    void sixtyfive_logging_loop();
-    void onehundredfifty_hz_logging_loop();
-    void threehundredseventy_hz_logging_loop();
+    void vertical_speed_logging_loop();
+    void pwm_logging_loop();
+    void rp_logging_loop();
+    void rpyr_logging_loop();
+    void perf_logging_loop();
         //%%%%%%%%%%%%%%%%%
         //%%%%%%%%%%%%%%%%%%%
     void fourhundred_hz_logging();
@@ -792,6 +793,7 @@ private:
     void Log_Write_RPY_Rate();
     void Log_Write_RP();
     void Log_Write_PWM();
+    void Log_Write_Loop();
 
     //%%%%%%%%%%%%%%%%%%
     //%%%%%%%%%%%%%%%%%%

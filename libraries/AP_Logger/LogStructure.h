@@ -625,6 +625,7 @@ struct PACKED log_Performance {
     uint32_t extra_loop_us;
 };
 
+
 struct PACKED log_SRTL {
     LOG_PACKET_HEADER;
     uint64_t time_us;
