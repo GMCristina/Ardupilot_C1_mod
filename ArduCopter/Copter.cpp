@@ -158,15 +158,17 @@ const AP_Scheduler::Task Copter::scheduler_tasks[] = {
 #if LOGGING_ENABLED == ENABLED
 	//%%%%%%%%%%%%%%%%
 		//%%%%%%%%%%%%%%%%
-		 SCHED_TASK(vertical_speed_logging_loop,   400,    50),
+		 SCHED_TASK(vertical_speed_logging_loop,  400 ,    50),
 		 SCHED_TASK(pwm_logging_loop,   400,    50),
 		 SCHED_TASK(rp_logging_loop,   400,    50),
 		 SCHED_TASK(rpyr_logging_loop, 400,   50),
+		// SCHED_TASK(rpyr1_logging_loop, 400,   50),
+		 // SCHED_TASK(rpyr2_logging_loop, 400,   50),
 		 SCHED_TASK(perf_logging_loop,400,50),
 		 //SCHED_TASK(perf_logging_loop,0.1,75),
 		//%%%%%%%%%%%%%%%%
 		//%%%%%%%%%%%%%%%%
-    SCHED_TASK(ten_hz_logging_loop,   10,    350),
+    SCHED_TASK(ten_hz_logging_loop,   10,    350), //10,350
     SCHED_TASK(twentyfive_hz_logging, 25,    110),
     SCHED_TASK_CLASS(AP_Logger,      &copter.logger,           periodic_tasks, 400, 300),
 #endif
@@ -400,7 +402,9 @@ void Copter::update_batt_compass(void)
 //%%%%%%%%%%%%%%%%%
 void Copter::vertical_speed_logging_loop()
 {
-    // GCS_SEND_TEXT(MAV_SEVERITY_WARNING,"La freq e' %f", (float)copter.g.freq_Vz);
+	//GCS_SEND_TEXT(MAV_SEVERITY_WARNING,"La freq e' %f", (float)g.freq_Vz);
+	//GCS_SEND_TEXT(MAV_SEVERITY_WARNING,"Par %f", (float)copter.prova);
+    //GCS_SEND_TEXT(MAV_SEVERITY_WARNING,"Par %f", (float)copter.prova);
     Log_Write_Vertical_Speed();
 }
 void Copter::pwm_logging_loop()
@@ -416,12 +420,25 @@ void Copter::pwm_logging_loop()
  void Copter::rpyr_logging_loop()
  {
      // GCS_SEND_TEXT(MAV_SEVERITY_WARNING,"La freq e' %d", (int)g.freq_RPYR);
-     Log_Write_RPY_Rate();
+     Log_Write_RPY_Rate(0);
+ }
+ void Copter::rpyr1_logging_loop()
+ {
+     // GCS_SEND_TEXT(MAV_SEVERITY_WARNING,"La freq e' %d", (int)g.freq_RPYR);
+     Log_Write_RPY_Rate(1);
+ }
+ void Copter::rpyr2_logging_loop()
+ {
+     // GCS_SEND_TEXT(MAV_SEVERITY_WARNING,"La freq e' %d", (int)g.freq_RPYR);
+     Log_Write_RPY_Rate(2);
  }
 
  void Copter::perf_logging_loop()
  {
-     Log_Write_Loop();
+	 if ((AP::scheduler().perf_info.get_num_loops()%4000)==0) {
+		 Log_Write_Loop();
+	 }
+
     // AP::scheduler().perf_info.reset();
  }
 
@@ -695,6 +712,7 @@ Copter::Copter(void)
     inertial_nav(ahrs),
     param_loader(var_info),
     flightmode(&mode_stabilize)
+	// prova(g.freq_Vz)
 {
     // init sensor error logging flags
     sensor_health.baro = true;

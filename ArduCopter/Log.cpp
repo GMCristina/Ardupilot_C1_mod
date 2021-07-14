@@ -15,6 +15,7 @@ struct PACKED log_Vz {
 struct PACKED log_RPY_rate {
     LOG_PACKET_HEADER;
     uint64_t time_us;
+    uint8_t imu_instance;
     float gyr_x, gyr_y, gyr_z;
 };
 
@@ -56,16 +57,17 @@ void Copter::Log_Write_Vertical_Speed(){
 
 }
 
-void Copter::Log_Write_RPY_Rate(){
+void Copter::Log_Write_RPY_Rate(uint8_t imu){
 
-    uint8_t imu_instance = 0;
+    // uint8_t imu_instance = 0; log_IMU
 
    struct log_RPY_rate pkt = {
             LOG_PACKET_HEADER_INIT(LOG_RPY_RATE_MSG),
             time_us  : AP_HAL::micros64(),
-              gyr_x : AP::ins().get_gyro(imu_instance).x,
-              gyr_y : AP::ins().get_gyro(imu_instance).y,
-              gyr_z : AP::ins().get_gyro(imu_instance).z
+			imu_instance : imu,
+            gyr_x : AP::ins().get_gyro(imu).x,
+            gyr_y : AP::ins().get_gyro(imu).y,
+            gyr_z : AP::ins().get_gyro(imu).z
         };
         logger.WriteBlock(&pkt, sizeof(pkt));
 
@@ -658,7 +660,7 @@ const struct LogStructure Copter::log_structure[] = {
         "Vz",  "Qf",    "TimeUS,Vz", "sn", "F0" },
 
       { LOG_RPY_RATE_MSG, sizeof(log_RPY_rate),
-          "RPYR",  "Qfff",    "TimeUS,GyrX,GyrY,GyrZ", "sEEE", "F000" },
+          "RPYR",  "QBfff",    "TimeUS,Imu,GyrX,GyrY,GyrZ", "s#EEE", "F-000" },
 
       { LOG_RP_MSG, sizeof(log_RP),
               "RP",  "Qcc",    "TimeUS,Roll,Pitch", "sdd", "FBB" },

@@ -232,6 +232,9 @@ private:
     Parameters g;
     ParametersG2 g2;
 
+    // float prova;
+   // AP_Float prova;
+
     // used to detect MAVLink acks from GCS to stop compassmot
     uint8_t command_ack_counter;
 
@@ -656,6 +659,8 @@ private:
     void pwm_logging_loop();
     void rp_logging_loop();
     void rpyr_logging_loop();
+    void rpyr1_logging_loop();
+    void rpyr2_logging_loop();
     void perf_logging_loop();
         //%%%%%%%%%%%%%%%%%
         //%%%%%%%%%%%%%%%%%%%
@@ -790,7 +795,7 @@ private:
     //%%%%%%%%%%%%%%%%%%
     //%%%%%%%%%%%%%%%%%%
     void Log_Write_Vertical_Speed();
-    void Log_Write_RPY_Rate();
+    void Log_Write_RPY_Rate(uint8_t imu_instance);
     void Log_Write_RP();
     void Log_Write_PWM();
     void Log_Write_Loop();
