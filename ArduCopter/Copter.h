@@ -662,6 +662,11 @@ private:
     void rpyr1_logging_loop();
     void rpyr2_logging_loop();
     void perf_logging_loop();
+    void loop_info_logging_loop();
+    void vz_info_logging_loop();
+    void rp_info_logging_loop();
+    void rpyr_info_logging_loop();
+    void pwm_info_logging_loop();
         //%%%%%%%%%%%%%%%%%
         //%%%%%%%%%%%%%%%%%%%
     void fourhundred_hz_logging();
@@ -796,9 +801,11 @@ private:
     //%%%%%%%%%%%%%%%%%%
     void Log_Write_Vertical_Speed();
     void Log_Write_RPY_Rate(uint8_t imu_instance);
+    void Log_Write_RPY_Rate();
     void Log_Write_RP();
     void Log_Write_PWM();
     void Log_Write_Loop();
+    void Log_Write_Task_Info(uint8_t task_index);
 
     //%%%%%%%%%%%%%%%%%%
     //%%%%%%%%%%%%%%%%%%

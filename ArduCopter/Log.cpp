@@ -19,6 +19,12 @@ struct PACKED log_RPY_rate {
     float gyr_x, gyr_y, gyr_z;
 };
 
+struct PACKED log_RPY_rate_IMU {
+    LOG_PACKET_HEADER;
+    uint64_t time_us;
+    float gyr_x, gyr_y, gyr_z;
+};
+
 struct PACKED log_RP {
     LOG_PACKET_HEADER;
     uint64_t time_us;
@@ -36,6 +42,17 @@ struct PACKED log_Loop {
     uint64_t time_us;
     uint16_t num_loops, num_long_run;
     uint32_t  max_time, min_time, avg_time;
+};
+
+struct PACKED log_TaskInfo {
+    LOG_PACKET_HEADER;
+    uint64_t time_us;
+    uint16_t min_time_us;
+    uint16_t max_time_us;
+    uint32_t elapsed_time_us;
+    uint32_t tick_count;
+    uint16_t slip_count;
+    uint16_t overrun_count;
 };
 
 
@@ -68,6 +85,21 @@ void Copter::Log_Write_RPY_Rate(uint8_t imu){
             gyr_x : AP::ins().get_gyro(imu).x,
             gyr_y : AP::ins().get_gyro(imu).y,
             gyr_z : AP::ins().get_gyro(imu).z
+        };
+        logger.WriteBlock(&pkt, sizeof(pkt));
+
+}
+
+void Copter::Log_Write_RPY_Rate(){
+
+
+
+   struct log_RPY_rate_IMU pkt = {
+            LOG_PACKET_HEADER_INIT(LOG_RPY_RATE_IMU_MSG),
+            time_us  : AP_HAL::micros64(),
+            gyr_x : AP::ins().get_gyro(1).x,
+            gyr_y : AP::ins().get_gyro(1).y,
+            gyr_z : AP::ins().get_gyro(1).z
         };
         logger.WriteBlock(&pkt, sizeof(pkt));
 
@@ -109,6 +141,27 @@ void Copter::Log_Write_Loop(){
             avg_time :AP::scheduler().perf_info.get_avg_time(),
         };
         logger.WriteBlock(&pkt, sizeof(pkt));
+}
+
+void Copter :: Log_Write_Task_Info(uint8_t task_index){
+
+    const AP::PerfInfo::TaskInfo* ti = AP::scheduler().perf_info.get_task_info(task_index);
+    GCS_SEND_TEXT(MAV_SEVERITY_WARNING,"n tick %d", (int)ti->max_time_us);
+
+    /*
+   struct log_TaskInfo pkt = {
+              LOG_PACKET_HEADER_INIT(LOG_LOOP_INFO_MSG),
+               time_us  : AP_HAL::micros64(),
+               min_time_us : ti->min_time_us ,
+                max_time_us : ti->max_time_us,
+                elapsed_time_us : ti->elapsed_time_us,
+                tick_count : ti->tick_count,
+                slip_count : ti->slip_count,
+                overrun_count : ti->overrun_count,
+            };
+
+            logger.WriteBlock(&pkt, sizeof(pkt));
+            */
 }
 
 //%%%%%%%%%%%%%%%%%%%%%
@@ -662,6 +715,9 @@ const struct LogStructure Copter::log_structure[] = {
       { LOG_RPY_RATE_MSG, sizeof(log_RPY_rate),
           "RPYR",  "QBfff",    "TimeUS,Imu,GyrX,GyrY,GyrZ", "s#EEE", "F-000" },
 
+      { LOG_RPY_RATE_IMU_MSG, sizeof(log_RPY_rate),
+              "RPYR",  "Qfff",    "TimeUS,GyrX,GyrY,GyrZ", "sEEE", "F000" },
+
       { LOG_RP_MSG, sizeof(log_RP),
               "RP",  "Qcc",    "TimeUS,Roll,Pitch", "sdd", "FBB" },
 
@@ -670,6 +726,18 @@ const struct LogStructure Copter::log_structure[] = {
 
       { LOG_LOOP_MSG, sizeof(log_Loop),
                     "LOOP",  "QHHIII",    "TimeUS, num_loops, num_long_run, max_time, min_time, avg_time", "s-----", "F-----" },
+
+      { LOG_LOOP_INFO_MSG, sizeof(log_TaskInfo),
+                "TASL",  "QHHIIHH",    "TimeUS, min_time_us, max_time_us, elapsed_time_us, tick_count, slip_count, overrun_count", "s------", "F------" },
+      { LOG_VZ_INFO_MSG, sizeof(log_TaskInfo),
+                 "TASV",  "QHHIIHH",    "TimeUS, min_time_us, max_time_us, elapsed_time_us, tick_count, slip_count, overrun_count", "s------", "F------" },
+      { LOG_RP_INFO_MSG, sizeof(log_TaskInfo),
+                 "TASY",  "QHHIIHH",    "TimeUS, min_time_us, max_time_us, elapsed_time_us, tick_count, slip_count, overrun_count", "s------", "F------" },
+      { LOG_RPYR_INFO_MSG, sizeof(log_TaskInfo),
+                 "TASR",  "QHHIIHH",    "TimeUS, min_time_us, max_time_us, elapsed_time_us, tick_count, slip_count, overrun_count", "s------", "F------" },
+      { LOG_PWM_INFO_MSG, sizeof(log_TaskInfo),
+                 "TASW",  "QHHIIHH",    "TimeUS, min_time_us, max_time_us, elapsed_time_us, tick_count, slip_count, overrun_count", "s------", "F------" },
+
 
 //%%%%%%%%%%%%%%%%%%%%%%%%
 //%%%%%%%%%%%%%%%%%%%%%%%%

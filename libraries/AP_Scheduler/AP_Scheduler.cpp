@@ -163,8 +163,23 @@ void AP_Scheduler::run(uint32_t time_available)
         const uint16_t dt = _tick_counter - _last_run[i];
         // we allow 0 to mean loop rate
         uint32_t interval_ticks = (is_zero(task.rate_hz) ? 1 : _loop_rate_hz / task.rate_hz);
+
         // GCS_SEND_TEXT(MAV_SEVERITY_WARNING,"n tick %d", (int)interval_ticks);
         // GCS_SEND_TEXT(MAV_SEVERITY_WARNING,"task freq %d", (int)task.rate_hz);
+        // GCS_SEND_TEXT(MAV_SEVERITY_WARNING,"Loop n %d", (int)_num_tasks);
+
+        //if ( is_zero(task.rate_hz)) {
+        //    GCS_SEND_TEXT(MAV_SEVERITY_WARNING,"Task RPYR n %d", (int)i);
+        //}
+
+        //const AP::PerfInfo::TaskInfo* ti = AP::scheduler().perf_info.get_task_info(i);
+
+        //if (ti->tick_count == 2000){
+        //    GCS_SEND_TEXT(MAV_SEVERITY_WARNING,"Task %d", (int)i);
+            // GCS_SEND_TEXT(MAV_SEVERITY_WARNING, task.name);
+
+        //}
+
         if (interval_ticks < 1) {
             interval_ticks = 1;
         }
