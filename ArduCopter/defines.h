@@ -128,6 +128,7 @@ enum LoggingParameters {
      LOG_RP_MSG,
      LOG_PWM_MSG,
      LOG_LOOP_MSG,
+     lOG_BATTERY_MSG,
      //%%%%%%%%%%%%%%%%%%%
      //%%%%%%%%%%%%%%%%%%%
 };

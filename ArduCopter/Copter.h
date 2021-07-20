@@ -657,6 +657,7 @@ private:
     void rp_logging_loop();
     void rpyr_logging_loop();
     void perf_logging_loop();
+    void battery_logging_loop();
         //%%%%%%%%%%%%%%%%%
         //%%%%%%%%%%%%%%%%%%%
     void fourhundred_hz_logging();
@@ -794,6 +795,7 @@ private:
     void Log_Write_RP();
     void Log_Write_PWM();
     void Log_Write_Loop();
+    void Log_Write_Battery();
 
     //%%%%%%%%%%%%%%%%%%
     //%%%%%%%%%%%%%%%%%%

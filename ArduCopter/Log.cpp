@@ -9,7 +9,7 @@
 struct PACKED log_Vz {
     LOG_PACKET_HEADER;
     uint64_t time_us;
-    float vz;
+    float vz, vy, vx;
 };
 
 struct PACKED log_RPY_rate {
@@ -37,6 +37,13 @@ struct PACKED log_Loop {
     uint32_t  max_time, min_time, avg_time;
 };
 
+struct PACKED log_Battery {
+    LOG_PACKET_HEADER;
+    uint64_t time_us;
+    float Volt;
+
+};
+
 
 void Copter::Log_Write_Vertical_Speed(){
 
@@ -49,7 +56,9 @@ void Copter::Log_Write_Vertical_Speed(){
    struct log_Vz pkt = {
             LOG_PACKET_HEADER_INIT(LOG_Vz_MSG),
             time_us  : AP_HAL::micros64(),
-            vz  : AP::gps().velocity(instance).z
+            vz  : AP::gps().velocity(instance).z,
+            vy  : AP::gps().velocity(instance).y,
+            vx  : AP::gps().velocity(instance).x
         };
         logger.WriteBlock(&pkt, sizeof(pkt));
 
@@ -107,6 +116,15 @@ void Copter::Log_Write_Loop(){
             avg_time :AP::scheduler().perf_info.get_avg_time(),
         };
         logger.WriteBlock(&pkt, sizeof(pkt));
+}
+
+void Log_Write_Battery() {
+    struct log_Battery pkt = {
+             LOG_PACKET_HEADER_INIT(LOG_BATTERY_MSG),
+             time_us  : AP_HAL::micros64(),
+             Volt : 10,
+         };
+         logger.WriteBlock(&pkt, sizeof(pkt));
 }
 
 //%%%%%%%%%%%%%%%%%%%%%
@@ -655,7 +673,7 @@ const struct LogStructure Copter::log_structure[] = {
 //%%%%%%%%%%%%%%%%%%%%%%%%
 //%%%%%%%%%%%%%%%%%%%%%%%%
       { LOG_Vz_MSG, sizeof(log_Vz),
-        "Vz",  "Qf",    "TimeUS,Vz", "sn", "F0" },
+        "Vz",  "Qfff",    "TimeUS,Vz, Vy, Vx", "snnn", "F000" },
 
       { LOG_RPY_RATE_MSG, sizeof(log_RPY_rate),
           "RPYR",  "Qfff",    "TimeUS,GyrX,GyrY,GyrZ", "sEEE", "F000" },
@@ -668,6 +686,9 @@ const struct LogStructure Copter::log_structure[] = {
 
       { LOG_LOOP_MSG, sizeof(log_Loop),
                     "LOOP",  "QHHIII",    "TimeUS, num_loops, num_long_run, max_time, min_time, avg_time", "s-----", "F-----" },
+
+      { lOG_BATTERY_MSG, sizeof(log_Battery),
+                     "BATT",  "Qf",    "TimeUS, Volt", "sv", "F0" },
 
 //%%%%%%%%%%%%%%%%%%%%%%%%
 //%%%%%%%%%%%%%%%%%%%%%%%%
