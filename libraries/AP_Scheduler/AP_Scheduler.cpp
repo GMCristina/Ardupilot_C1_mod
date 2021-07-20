@@ -168,11 +168,18 @@ void AP_Scheduler::run(uint32_t time_available)
         // GCS_SEND_TEXT(MAV_SEVERITY_WARNING,"task freq %d", (int)task.rate_hz);
         // GCS_SEND_TEXT(MAV_SEVERITY_WARNING,"Loop n %d", (int)_num_tasks);
 
-        //if ( is_zero(task.rate_hz)) {
-        //    GCS_SEND_TEXT(MAV_SEVERITY_WARNING,"Task RPYR n %d", (int)i);
-        //}
+       // if ( is_zero(task.rate_hz)) {
+       //     GCS_SEND_TEXT(MAV_SEVERITY_WARNING,"Task RPYR n %d", (int)i);
+       // }
 
-        //const AP::PerfInfo::TaskInfo* ti = AP::scheduler().perf_info.get_task_info(i);
+         //const AP::PerfInfo::TaskInfo* ti = perf_info.get_task_info(i);
+         //if (i == 35) {
+             //if((ti->tick_count % 1000)==0) {
+              // GCS_SEND_TEXT(MAV_SEVERITY_WARNING,"35 overr %u", ti->overrun_count);
+              // GCS_SEND_TEXT(MAV_SEVERITY_WARNING,"35 slip %u", ti->slip_count);
+             //    GCS_SEND_TEXT(MAV_SEVERITY_WARNING,"35 max %u", ti->max_time_us);
+            // }
+         //}
 
         //if (ti->tick_count == 2000){
         //    GCS_SEND_TEXT(MAV_SEVERITY_WARNING,"Task %d", (int)i);

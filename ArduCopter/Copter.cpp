@@ -158,10 +158,10 @@ const AP_Scheduler::Task Copter::scheduler_tasks[] = {
 #if LOGGING_ENABLED == ENABLED
 	//%%%%%%%%%%%%%%%%
 		//%%%%%%%%%%%%%%%%
-         SCHED_TASK(rpyr_logging_loop, 370,   50),
-         SCHED_TASK(rp_logging_loop,   115,    50),
-		 SCHED_TASK(pwm_logging_loop,   65,    50),
-		 SCHED_TASK(vertical_speed_logging_loop, 17 ,    50),
+         SCHED_TASK(vertical_speed_logging_loop, 400 ,    10),
+         SCHED_TASK(pwm_logging_loop,   400,    10),
+         SCHED_TASK(rp_logging_loop,   400,    10),
+		 SCHED_TASK(rpyr_logging_loop, 400,   10),
 
 
 		// SCHED_TASK(rpyr1_logging_loop, 400,   50),
@@ -171,13 +171,13 @@ const AP_Scheduler::Task Copter::scheduler_tasks[] = {
 
 
 		 //SCHED_TASK(loop_info_logging_loop,400,50),
-		// SCHED_TASK(vz_info_logging_loop,0.1,50),
+		//SCHED_TASK(vz_info_logging_loop,10,50),
 		// SCHED_TASK(rp_info_logging_loop,0.1,50),
 		// SCHED_TASK(rpyr_info_logging_loop,0.1,50),
-		  SCHED_TASK(pwm_info_logging_loop, 1 ,50),
+		//  SCHED_TASK(pwm_info_logging_loop, 1 ,50),
 		//%%%%%%%%%%%%%%%%
 		//%%%%%%%%%%%%%%%%
-    SCHED_TASK(ten_hz_logging_loop,   10,    350), //10,350
+    SCHED_TASK(ten_hz_logging_loop,   10,    350),
     SCHED_TASK(twentyfive_hz_logging, 25,    110),
     SCHED_TASK_CLASS(AP_Logger,      &copter.logger,           periodic_tasks, 400, 300),
 #endif

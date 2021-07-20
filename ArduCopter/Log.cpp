@@ -146,9 +146,9 @@ void Copter::Log_Write_Loop(){
 void Copter :: Log_Write_Task_Info(uint8_t task_index){
 
     const AP::PerfInfo::TaskInfo* ti = AP::scheduler().perf_info.get_task_info(task_index);
-    GCS_SEND_TEXT(MAV_SEVERITY_WARNING,"n tick %d", (int)ti->max_time_us);
+   // GCS_SEND_TEXT(MAV_SEVERITY_WARNING,"n tick %d", (int)ti->max_time_us);
 
-    /*
+
    struct log_TaskInfo pkt = {
               LOG_PACKET_HEADER_INIT(LOG_LOOP_INFO_MSG),
                time_us  : AP_HAL::micros64(),
@@ -161,7 +161,7 @@ void Copter :: Log_Write_Task_Info(uint8_t task_index){
             };
 
             logger.WriteBlock(&pkt, sizeof(pkt));
-            */
+
 }
 
 //%%%%%%%%%%%%%%%%%%%%%
@@ -727,16 +727,16 @@ const struct LogStructure Copter::log_structure[] = {
       { LOG_LOOP_MSG, sizeof(log_Loop),
                     "LOOP",  "QHHIII",    "TimeUS, num_loops, num_long_run, max_time, min_time, avg_time", "s-----", "F-----" },
 
-      { LOG_LOOP_INFO_MSG, sizeof(log_TaskInfo),
-                "TASL",  "QHHIIHH",    "TimeUS, min_time_us, max_time_us, elapsed_time_us, tick_count, slip_count, overrun_count", "s------", "F------" },
-      { LOG_VZ_INFO_MSG, sizeof(log_TaskInfo),
-                 "TASV",  "QHHIIHH",    "TimeUS, min_time_us, max_time_us, elapsed_time_us, tick_count, slip_count, overrun_count", "s------", "F------" },
-      { LOG_RP_INFO_MSG, sizeof(log_TaskInfo),
-                 "TASY",  "QHHIIHH",    "TimeUS, min_time_us, max_time_us, elapsed_time_us, tick_count, slip_count, overrun_count", "s------", "F------" },
-      { LOG_RPYR_INFO_MSG, sizeof(log_TaskInfo),
-                 "TASR",  "QHHIIHH",    "TimeUS, min_time_us, max_time_us, elapsed_time_us, tick_count, slip_count, overrun_count", "s------", "F------" },
-      { LOG_PWM_INFO_MSG, sizeof(log_TaskInfo),
-                 "TASW",  "QHHIIHH",    "TimeUS, min_time_us, max_time_us, elapsed_time_us, tick_count, slip_count, overrun_count", "s------", "F------" },
+      //{ LOG_LOOP_INFO_MSG, sizeof(log_TaskInfo),
+       //         "TASL",  "QHHIIHH",    "TimeUS, min_time_us, max_time_us, elapsed_time_us, tick_count, slip_count, overrun_count", "s------", "F------" },
+      //{ LOG_VZ_INFO_MSG, sizeof(log_TaskInfo),
+        //         "TASV",  "QHHIIHH",    "TimeUS, min_time_us, max_time_us, elapsed_time_us, tick_count, slip_count, overrun_count", "s------", "F------" },
+     // { LOG_RP_INFO_MSG, sizeof(log_TaskInfo),
+                 // "TASY",  "QHHIIHH",    "TimeUS, min_time_us, max_time_us, elapsed_time_us, tick_count, slip_count, overrun_count", "s------", "F------" },
+     // { LOG_RPYR_INFO_MSG, sizeof(log_TaskInfo),
+             //    "TASR",  "QHHIIHH",    "TimeUS, min_time_us, max_time_us, elapsed_time_us, tick_count, slip_count, overrun_count", "s------", "F------" },
+     // { LOG_PWM_INFO_MSG, sizeof(log_TaskInfo),
+                // "TASW",  "QHHIIHH",    "TimeUS, min_time_us, max_time_us, elapsed_time_us, tick_count, slip_count, overrun_count", "s------", "F------" },
 
 
 //%%%%%%%%%%%%%%%%%%%%%%%%
