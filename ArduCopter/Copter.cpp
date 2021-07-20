@@ -158,10 +158,10 @@ const AP_Scheduler::Task Copter::scheduler_tasks[] = {
 #if LOGGING_ENABLED == ENABLED
 	//%%%%%%%%%%%%%%%%
 		//%%%%%%%%%%%%%%%%
-         SCHED_TASK(vertical_speed_logging_loop, 400 ,    10),
-         SCHED_TASK(pwm_logging_loop,   400,    10),
-         SCHED_TASK(rp_logging_loop,   400,    10),
-		 SCHED_TASK(rpyr_logging_loop, 400,   10),
+         SCHED_TASK(vertical_speed_logging_loop, 17 ,    50),
+         SCHED_TASK(pwm_logging_loop,   65,    50),
+         SCHED_TASK(rp_logging_loop,   115,    50),
+		// SCHED_TASK(rpyr_logging_loop, 370,   50),
 
 
 		// SCHED_TASK(rpyr1_logging_loop, 400,   50),

@@ -97,9 +97,9 @@ void Copter::Log_Write_RPY_Rate(){
    struct log_RPY_rate_IMU pkt = {
             LOG_PACKET_HEADER_INIT(LOG_RPY_RATE_IMU_MSG),
             time_us  : AP_HAL::micros64(),
-            gyr_x : AP::ins().get_gyro(1).x,
-            gyr_y : AP::ins().get_gyro(1).y,
-            gyr_z : AP::ins().get_gyro(1).z
+            gyr_x : AP::ins().get_gyro(0).x,
+            gyr_y : AP::ins().get_gyro(0).y,
+            gyr_z : AP::ins().get_gyro(0).z
         };
         logger.WriteBlock(&pkt, sizeof(pkt));
 
