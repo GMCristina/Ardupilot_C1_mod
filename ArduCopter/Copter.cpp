@@ -158,10 +158,10 @@ const AP_Scheduler::Task Copter::scheduler_tasks[] = {
 #if LOGGING_ENABLED == ENABLED
 	//%%%%%%%%%%%%%%%%
 		//%%%%%%%%%%%%%%%%
+         SCHED_TASK(rpyr_logging_loop, 400,   50),
+         SCHED_TASK(rp_logging_loop,   400,    50),
+         SCHED_TASK(pwm_logging_loop,   400,    50),
 		 SCHED_TASK(vertical_speed_logging_loop,   400,    50),
-		 SCHED_TASK(pwm_logging_loop,   400,    50),
-		 SCHED_TASK(rp_logging_loop,   400,    50),
-		 SCHED_TASK(rpyr_logging_loop, 400,   50),
 		 SCHED_TASK(perf_logging_loop,400,50),
 		 //SCHED_TASK(perf_logging_loop,0.1,75),
 		//%%%%%%%%%%%%%%%%
@@ -421,7 +421,9 @@ void Copter::pwm_logging_loop()
 
  void Copter::perf_logging_loop()
  {
+     if((AP::scheduler().perf_info.get_num_loops()%4000)==0) {
      Log_Write_Loop();
+     }
     // AP::scheduler().perf_info.reset();
  }
 
