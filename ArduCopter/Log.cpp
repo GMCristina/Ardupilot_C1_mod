@@ -6,10 +6,11 @@
 //%%%%%%%%%%%%%%%%%%%%%%%
 //%%%%%%%%%%%%%%%%%%%%%%
 
-struct PACKED log_Vz {
+struct PACKED log_Gps {
     LOG_PACKET_HEADER;
     uint64_t time_us;
     float vz, vy, vx;
+    int32_t  latitude, longitude, altitude;
 };
 
 struct PACKED log_RPY_rate {
@@ -18,10 +19,10 @@ struct PACKED log_RPY_rate {
     float gyr_x, gyr_y, gyr_z;
 };
 
-struct PACKED log_RP {
+struct PACKED log_RPY {
     LOG_PACKET_HEADER;
     uint64_t time_us;
-    int16_t roll, pitch;
+    int16_t roll, pitch, yaw;
 };
 
 struct PACKED log_PWM {
@@ -45,23 +46,25 @@ struct PACKED log_Battery {
 };
 
 
-void Copter::Log_Write_Vertical_Speed(){
+void Copter::Log_Write_Gps(){
 
      uint8_t instance =0;
      //AP_GPS *oggetto = AP_GPS::get_singleton();
     // Vector3f vec = oggetto.velocity(instance);
     // AP_GPS oggetto = AP_GPS::AP_GPS();
 
-    //AP_GPS ogg = copter.gps;
-   struct log_Vz pkt = {
-            LOG_PACKET_HEADER_INIT(LOG_Vz_MSG),
+    //AP_GPS ogg = copter.gps; "GPS"
+   struct log_Gps pkt = {
+            LOG_PACKET_HEADER_INIT(LOG_XYZV_MSG),
             time_us  : AP_HAL::micros64(),
             vz  : AP::gps().velocity(instance).z,
             vy  : AP::gps().velocity(instance).y,
-            vx  : AP::gps().velocity(instance).x
+            vx  : AP::gps().velocity(instance).x,
+            latitude : AP::gps().location(instance).lat,
+            longitude :AP::gps().location(instance).lng,
+            altitude :AP::gps().location(instance).alt,
         };
         logger.WriteBlock(&pkt, sizeof(pkt));
-
 
 }
 
@@ -80,13 +83,14 @@ void Copter::Log_Write_RPY_Rate(){
 
 }
 
-void Copter::Log_Write_RP(){
+void Copter::Log_Write_RPY(){
 
-   struct log_RP pkt = {
-            LOG_PACKET_HEADER_INIT(LOG_RP_MSG),
+   struct log_RPY pkt = {
+            LOG_PACKET_HEADER_INIT(LOG_RPY_MSG),
             time_us  : AP_HAL::micros64(),
             roll : (int16_t)AP::ahrs().roll_sensor ,
-            pitch : (int16_t)AP::ahrs().pitch_sensor
+            pitch : (int16_t)AP::ahrs().pitch_sensor,
+            yaw : (int16_t)AP::ahrs().yaw_sensor
         };
         logger.WriteBlock(&pkt, sizeof(pkt));
 }
@@ -118,14 +122,15 @@ void Copter::Log_Write_Loop(){
         logger.WriteBlock(&pkt, sizeof(pkt));
 }
 
-void Log_Write_Battery() {
+/* void Copter :: Log_Write_Battery() {
     struct log_Battery pkt = {
-             LOG_PACKET_HEADER_INIT(LOG_BATTERY_MSG),
+             LOG_PACKET_HEADER_INIT(lOG_BATTERY_MSG),
              time_us  : AP_HAL::micros64(),
              Volt : 10,
          };
          logger.WriteBlock(&pkt, sizeof(pkt));
 }
+*/
 
 //%%%%%%%%%%%%%%%%%%%%%
 //%%%%%%%%%%%%%%%%%%%%%%%%
@@ -672,14 +677,14 @@ const struct LogStructure Copter::log_structure[] = {
       "GUID",  "QBffffff",    "TimeUS,Type,pX,pY,pZ,vX,vY,vZ", "s-mmmnnn", "F-BBBBBB" },
 //%%%%%%%%%%%%%%%%%%%%%%%%
 //%%%%%%%%%%%%%%%%%%%%%%%%
-      { LOG_Vz_MSG, sizeof(log_Vz),
-        "Vz",  "Qfff",    "TimeUS,Vz, Vy, Vx", "snnn", "F000" },
+      { LOG_XYZV_MSG, sizeof(log_Gps),
+        "XYZV",  "QfffLLe",    "TimeUS,Vz, Vy, Vx, lat,lng,alt", "snnnDUm", "F000GGB" },
 
       { LOG_RPY_RATE_MSG, sizeof(log_RPY_rate),
           "RPYR",  "Qfff",    "TimeUS,GyrX,GyrY,GyrZ", "sEEE", "F000" },
 
-      { LOG_RP_MSG, sizeof(log_RP),
-              "RP",  "Qcc",    "TimeUS,Roll,Pitch", "sdd", "FBB" },
+      { LOG_RPY_MSG, sizeof(log_RPY),
+              "RP",  "Qccc",    "TimeUS,Roll,Pitch,Yaw", "sddd", "FBBB" },
 
       { LOG_PWM_MSG, sizeof(log_PWM),
                       "PWM",  "QHHHH",    "TimeUS,C1,C2,C3,C4", "sYYYY", "F----" },

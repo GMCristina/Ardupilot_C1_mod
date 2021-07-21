@@ -123,9 +123,9 @@ enum LoggingParameters {
      LOG_SYSIDS_MSG,
      //%%%%%%%%%%%%%%%%%
      //%%%%%%%%%%%%%%%%%
-     LOG_Vz_MSG,
+     LOG_XYZV_MSG,
      LOG_RPY_RATE_MSG,
-     LOG_RP_MSG,
+     LOG_RPY_MSG,
      LOG_PWM_MSG,
      LOG_LOOP_MSG,
      lOG_BATTERY_MSG,

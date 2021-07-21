@@ -652,9 +652,9 @@ private:
     void update_batt_compass(void);
     // %%%%%%%%%%%%%%%%%%%
         //%%%%%%%%%%%%%%%%%
-    void vertical_speed_logging_loop();
+    void gps_logging_loop();
     void pwm_logging_loop();
-    void rp_logging_loop();
+    void rpy_logging_loop();
     void rpyr_logging_loop();
     void perf_logging_loop();
     void battery_logging_loop();
@@ -790,9 +790,9 @@ private:
 
     //%%%%%%%%%%%%%%%%%%
     //%%%%%%%%%%%%%%%%%%
-    void Log_Write_Vertical_Speed();
+    void Log_Write_Gps();
     void Log_Write_RPY_Rate();
-    void Log_Write_RP();
+    void Log_Write_RPY();
     void Log_Write_PWM();
     void Log_Write_Loop();
     void Log_Write_Battery();
